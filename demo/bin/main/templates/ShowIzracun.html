@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/style.css">
+<title>ShowIzracun</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script th:inline="javascript">
+            $(document).ready(function() {
+                $("#locales").change(function () {
+                    var selectedOption = $('#locales').val();
+                    if (selectedOption != ''){
+                        window.location.replace('?language=' + selectedOption);
+                    }
+                });
+            });
+        </script>
+        
+</head>
+<body>
+
+<select id="locales">
+	<option value="hr"
+		th:selected="${#locale.language == 'hr'}"
+		th:text="#{msg.lang.hr}"></option>
+	<option value="en"
+		th:selected="${#locale.language == 'en'}"
+		th:text="#{msg.lang.en}"></option>
+</select>
+
+<img src="/moneyPicture.jpg" width="25%" height="25%">
+<p th:text="#{msg.successTrosak1} + ' ' + 
+					*{trosak.naziv} + ' ' + #{msg.successTrosak2} + ' ' +
+					*{#strings.toString(trosak.iznos)} + ' ' +#{msg.successTrosak3} + ' ' + 
+					*{trosak.vrsta} + ' ' +  #{msg.successTrosak4} + ' ' + ${#dates.format(#dates.createNow(), 'dd/MM/yyyy')}" />
+<span th:text="${session.novcanik.getNazivNovcanika()} + ' ' + #{msg.successTrosak5} + ' ' + ${session.stanjeNaRacunu}"></span>
+
+<a th:href="@{/troskovi/izracun}" th:text="#{msg.return}"></a>
+
+<a th:href="@{/troskovi/search}" th:text="#{msg.searchTrosak}"></a>
+<a th:href="@{/troskovi/novcanikSearch}" th:text="#{msg.searchNovcanik}"></a>
+<div sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/troskovi/resetNovcanik}" th:text="#{msg.resetWallet}"></a></div>
+
+<div sec:authorize="isAuthenticated()">
+		<form method="POST" th:action="@{/logout}">
+			<span th:text="#{msg.loggedInAs}"></span>
+			<span sec:authentication="name" th:text="#{msg.user}"></span>
+			<button type="submit" value="Logout" th:text="#{msg.logout}"></button>
+		</form>
+</div>
+	
+
+<a class="button" th:href="@{/troskovi/noviEkran}">Novi ekran</a>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="https://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/style.css}"/>
+<title>Index</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script th:inline="javascript">
+            $(document).ready(function() {
+                $("#locales").change(function () {
+                    var selectedOption = $('#locales').val();
+                    if (selectedOption != ''){
+                        window.location.replace('?language=' + selectedOption);
+                    }
+                });
+            });
+        </script>
+
+</head>
+<body>
+
+
+<select id="locales">
+	<option value="hr"
+		th:selected="${#locale.language == 'hr'}"
+		th:text="#{msg.lang.hr}"></option>
+	<option value="en"
+		th:selected="${#locale.language == 'en'}"
+		th:text="#{msg.lang.en}"></option>
+</select>
+
+<img src="/moneyPicture.jpg" width="25%" height="25%">
+
+<span>Novi ekran<span>
+
+
+<form method="POST" th:object="${NovcanikPrikaz}">
+	<span th:text="*{nazivNovcanika}"></span>
+	
+</form>
+
+<table>
+    <thead>
+        <tr>
+        	<th>Id</th>
+        	<th>Datum</th>
+            <th th:text="#{msg.name}"></th>
+            <th th:text="#{msg.IznosTrosak}"></th>
+            <th th:text="#{msg.vrstaTrosak}"></th>
+            <th th:text="#{msg.wallet}"></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        </tr>
+        <tr th:each="Trosak : ${podatci}">
+        	<td><span th:text="${Trosak.id}"></span></td>
+            <td><span th:text="${Trosak.createDate}"></span></td>
+            <td><span th:text="${Trosak.naziv}"></span></td>
+            <td><span th:text="${Trosak.iznos}"></span></td>
+            <td><span th:text="${Trosak.vrsta}"></span></td>
+            <td><span th:text="${#strings.toString(Trosak.getNovcanik().getId())}"></span></td>
+            <td><a th:href="@{troskovi/izracun(id=${Trosak.id},t=2)}">delete</a></td>
+            <!--<td><a th:href="@{/troskovi/deleteUserTrosak/Trosak.iznos">delete</a></td>-->
+            <!--  <td><a th:href="|@{/troskovi/deleteUserTrosak/${Trosak.id}}|">Delete</a></td> -->
+           <!--  -<td>
+           <form th:action="@{/deleteUserTrosak}" method="POST" th:object="${Trosak}">
+              <input type="hidden" th:field="${Trosak.id}"/>
+              <button type="submit" value="Submit"">Delete</button>
+           </form>
+       </td>
+       -->
+        </tr>
+    </tbody>
+</table>
+
+<p th:text="${SumaTroskova}"><p/>
+<a th:href="@{/troskovi/search}" th:text="#{msg.searchTrosak}"></a>
+
+<div sec:authorize="isAuthenticated()">
+		<form method="POST" th:action="@{/logout}">
+			<span th:text="#{msg.loggedInAs}"></span>
+			<span sec:authentication="name" th:text="#{msg.user}"></span>
+			<button type="submit" value="Logout" th:text="#{msg.logout}"></button>
+		</form>
+</div>
+
+<a th:href="@{/troskovi/izracun}" th:text="#{msg.return}"></a>
+
+
+
+</body>
+</html>

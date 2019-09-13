@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/styleIzracun.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<script th:inline="javascript">
+            $(document).ready(function() {
+                $("#locales").change(function () {
+                    var selectedOption = $('#locales').val();
+                    if (selectedOption != ''){
+                        window.location.replace('?language=' + selectedOption);
+                    }
+                });
+            });
+        </script>
+</head>
+<body>
+
+</head>
+<body>
+
+<select id="locales">
+	<option value="hr"
+		th:selected="${#locale.language == 'hr'}"
+		th:text="#{msg.lang.hr}"></option>
+	<option value="en"
+		th:selected="${#locale.language == 'en'}"
+		th:text="#{msg.lang.en}"></option>
+</select>
+
+<div id="container">
+	<div id="innerContainer">
+	<!--  
+			<div id="containerSlika">
+				<img id="slika" src="\moneyPicture.jpg">
+			</div>-->
+	
+			
+			<h1 th:text="#{msg.enterNewExpense}"></h1>
+			
+			<div>
+				 <form method="POST" th:object="${Trosak}">
+				    <label for="naziv" th:text="#{msg.name}"></label>
+				    <input type="text" th:field="*{naziv}" name="naziv" placeholder="Naziv troška..">
+					<span th:if="${#fields.hasErrors('naziv')}" th:errors="*{naziv}" th:text="msg.wrongNaziv"></span>
+				
+					<label for="trosak" th:text="#{msg.vrstaTrosak}"></label>
+						<select th:field="*{vrsta}">
+						    <option th:each="vrsta : ${vrste}"
+						            th:value="${vrsta}"
+						            th:text="${vrsta}">
+						    </option>
+					    </select>
+				   
+					<label for="iznos" th:text="#{msg.IznosTrosak}"></label>
+				    <input type="text" th:field="*{iznos}" name="iznos" placeholder="Iznos troška..">
+				  	<span th:if="${#fields.hasErrors('iznos')}" th:errors="*{iznos}" th:text="#{msg.wrongIznos}"></span>
+				    
+				    <input type="submit" value="Submit">
+				  </form>
+			</div>
+		</div>
+</div>
+<a th:href="@{/troskovi/search}" th:text="#{msg.searchTrosak}"></a>
+<a th:href="@{/troskovi/novcanikSearch}" th:text="#{msg.searchNovcanik}"></a>
+
+<div sec:authorize="isAuthenticated()">
+		<form method="POST" th:action="@{/logout}">
+			<span th:text="#{msg.loggedInAs}"></span>
+			<span sec:authentication="name" th:text="#{msg.user}"></span>
+			<button type="submit" value="Logout" th:text="#{msg.logout}"></button>
+		</form>
+</div>
+	
+
+
+</body>
+</html>
+
