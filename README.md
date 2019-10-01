@@ -3,7 +3,7 @@
 Money web application usign Spring Boot
 
 ### Description
-Web application which goal is to implement expense onto which user can add, delte or update different item objects. Application is secured using Spring Boot security.
+Web application which goal is to implement expense onto which user can add, delete or update item. Application is secured using Spring Boot security.
 
 ## Tehnologies used:
 * Java
