@@ -1,15 +1,20 @@
 # WebMoneyApplication
+
 Money web application usign Spring Boot
 
+### Description
+Web application which goal is to implement expense onto which user can add, delte or update different item objects. Application is secured using Spring Boot security.
 
-Web application which goal is to implement expense onto which user can add, delte or update different item objects.
+## Tehnologies used:
+* Java
+* Spring Boot
+* Thymeleaf
+* CSS
+* HTML
 
-Tehnologies used:
-Java,Spring Boot,CSS,HTML,Thymeleaf
-
-Features implemented:
-Login/Registration
-Admin/User privileges
-Add/delete/update item
-Add expense
-Login Security
+## Features implemented:
+* Login/Registration
+* Admin/User privileges
+* Add/delete/update item
+* Add expense
+* Login Security
