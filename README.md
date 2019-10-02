@@ -11,6 +11,7 @@ Web application which goal is to implement expense onto which user can add, dele
 * Thymeleaf
 * CSS
 * HTML
+* SQL
 
 ## Features implemented:
 * Login/Registration
