@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 ///@SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
 @SpringBootApplication()
 public class DemoApplication {
-	//PS5
+	//Its actually PS4
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
 	}
